@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+  drupal-test-1:
+    image: drupal:latest #this it's the latest image for drupal
+    ports: '8080:80' #redirects ports from 80 to 8080
+    environment: POSTGRES_PASSWORD=pass # sets a password for the postgres database
+    volumes:
+      - ./drupal_volumes.conf:/var/www/html/modules #stores modules data from drupal
+      - ./drupal_profile.conf:/var/www/html/profiles #stores profiles data from drupal
+      - ./drupal_sites.conf:/var/www/html/sites #stores sites data from drupal
+      - ./drupal_themes.conf:/var/www/html/themes #stores themes data from drupal
+
+  postgres-test-1:
+    image: postgres:latest #the latest image for postgres
