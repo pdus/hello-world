@@ -1,25 +1,30 @@
-version: '3'
+version: '2'
 
 services:
   drupal-test-1:
     image: drupal:latest #this it's the latest image for drupal
     ports: 
       - '8080:80' #redirects ports from 80 to 8080
-    environment: 
-      POSTGRES_USER: user # sets a user for the postgres database, required
-      POSTGRES_PASSWORD: pass # sets a password for the postgres database
-      POSTGRES_DB: postgres-test-1 # sets a name for postgres database
-      POSTGRES_HOST: postgres-test-1 # recently added to fix localhost issue on setup
+    
     volumes:
-      - /var/www/html/modules #stores modules data from drupal
-      - /var/www/html/profiles #stores profiles data from drupal
-      - /var/www/html/sites #stores sites data from drupal
-      - /var/www/html/themes #stores themes data from drupal
+      - drupal-modules:/var/www/html/modules #stores modules data from drupal #also it's added drupal-modules to reference in persistent data
+      - drupal-profiles:/var/www/html/profiles #stores profiles data from drupal #also it's added drupal-profiles to reference in persistent data
+      - drupal-sites:/var/www/html/sites #stores sites data from drupal #also it's added drupal-sites to reference in persistent data
+      - drupal-themes:/var/www/html/themes #stores themes data from drupal #also it's added drupal-themes to reference in persistent data
 
   postgres-test-1:
     image: postgres:latest #the latest image for postgres
-    restart: always
-    ports:
-      - '5432:5432'
-    volumes: 
-      - /var/lib/postgresql/data #added a volume for the db
+    #restart: always  # In the solution it's not needed
+    environment: #on the solution, only applies the use of POSTGRES_PASSWORD=
+      #POSTGRES_USER: user # sets a user for the postgres database, required
+      - POSTGRES_PASSWORD=pasapalabra # sets a password for the postgres database
+      #POSTGRES_DB: drupal
+    #There's no need for the volumes on this postgres, just need to be referenced to the drupal modules
+    #volumes: 
+    #  - /var/lib/postgresql/data #added a volume for the db
+
+volumes: #this volumes are referenced on the volumes of the Drupal's service
+   drupal-profiles:
+   drupal-modules:
+   drupal-sites:
+   drupal-themes:
