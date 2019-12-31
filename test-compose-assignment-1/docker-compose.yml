@@ -8,7 +8,8 @@ services:
     environment: 
       POSTGRES_USER: user # sets a user for the postgres database, required
       POSTGRES_PASSWORD: pass # sets a password for the postgres database
-      POSTGRES_DB: drupal-test-1 # sets a name for postgres database
+      POSTGRES_DB: postgres-test-1 # sets a name for postgres database
+      POSTGRES_HOST: postgres-test-1 # recently added to fix localhost issue on setup
     volumes:
       - /var/www/html/modules #stores modules data from drupal
       - /var/www/html/profiles #stores profiles data from drupal
