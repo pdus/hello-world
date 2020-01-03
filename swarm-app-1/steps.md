@@ -5,3 +5,5 @@ a `backend` and `frontend` overlay network are needed. Nothing different about t
 - *docker network create --driver overlay frontend* 
 - *docker network create --driver overlay backend*
 
+**Once this it's done it's possible to check that both networks are on swarm mode, using the command** *docker network ls*
+
